@@ -22,13 +22,13 @@ ENV POC_BIN="/opt/bin/poc" \
 RUN mkdir -p $POC_BIN
 WORKDIR $POC_BIN
 
-# COPY --from=0 /target/poc-1.0-SNAPSHOT.jar $POC_BIN
-#
-# RUN mkdir -p /var/log/poc
-# RUN chmod 777 /var/log/poc
-#
-# RUN groupadd --gid 303 poc \
-#   && useradd --uid 303 --gid poc --shell /bin/bash --create-home poc -G sudo
-#
-# RUN chown -R poc:poc /var/log
-# CMD ["/opt/bin/poc/L1POC-0.1-SNAPSHOT.jar"]
+COPY --from=0 /src/target/poc-1.0-SNAPSHOT.jar $POC_BIN
+
+RUN mkdir -p /var/log/poc
+RUN chmod 777 /var/log/poc
+
+RUN groupadd --gid 303 poc \
+ && useradd --uid 303 --gid poc --shell /bin/bash --create-home poc -G sudo
+
+RUN chown -R poc:poc /var/log
+CMD ["/opt/bin/poc/L1POC-0.1-SNAPSHOT.jar"]
