@@ -22,9 +22,6 @@ COPY --from=0 /src/target/poc-1.0-SNAPSHOT.jar $POC_BIN
 
 RUN mkdir -p $POC_LOG
 RUN chmod 777 $POC_LOG
+RUN chmod -R 777 $POC_BIN
 
-RUN groupadd --gid 303 poc \
- && useradd --uid 303 --gid poc --shell /bin/bash --create-home poc
-
-RUN chown -R poc:poc /var/log
-CMD ["/opt/bin/poc/poc-1.0-SNAPSHOT.jar"]
+CMD ["java","-jar","/opt/bin/poc/poc-1.0-SNAPSHOT.jar"]
